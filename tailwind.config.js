@@ -4,10 +4,7 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
     theme: {
     	extend: {
-            backgroundImage: {
-                'hero': "url('./img.png')",
-               
-               },
+           
             fontWeight: ['hover', 'focus'],
             fontFamily: {
                 'sans': ['ui-sans-serif', 'system-ui'],
