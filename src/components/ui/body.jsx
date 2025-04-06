@@ -66,9 +66,9 @@ const Body = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 overflow-x-hidden">
       <Nav scrollToSection={scrollToSection} aboutRef={aboutRef} contactRef={contactRef} />
-      <div className="container mx-auto px-6 pt-24"> 
+      <div className="container mx-auto px-4 sm:px-6 pt-24"> 
         
         <section className="min-h-[calc(100vh-6rem)] flex items-center justify-center"> 
           <motion.div
@@ -77,16 +77,16 @@ const Body = () => {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            <h1 className='text-center font-bold text-7xl bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-4 font-poppins tracking-tight'>
+            <h1 className='text-center font-bold text-4xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-4 font-poppins tracking-tight'>
               Smart and Secure Student
             </h1>
-            <h1 className='text-center font-bold text-7xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 mb-16 font-poppins tracking-tight'>
+            <h1 className='text-center font-bold text-4xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 mb-16 font-poppins tracking-tight'>
               Late Comers Management System
             </h1>
           </motion.div>
         </section>
 
-        <h1 className='  bg-clip-text text-transparent  bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-5xl font-bold font-poppins tracking-tight'>Key Features</h1>
+        <h1 className='bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-3xl md:text-5xl font-bold font-poppins tracking-tight'>Key Features</h1>
         <section className="min-h-screen py-24">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -94,14 +94,12 @@ const Body = () => {
             transition={{ duration: 0.8 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            
             {features.map((feature, index) => (
               <FeatureCard key={index} {...feature} />
             ))}
           </motion.div>
         </section>
 
-        
         <section ref={aboutRef} className="min-h-screen py-32"> 
           <motion.div
             initial={{ opacity: 0 }}
@@ -109,15 +107,14 @@ const Body = () => {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-5xl  bg-clip-text  font-bold text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-8 text-center">About Us</h2>
-            <div className="space-y-6 text-gray-300 text-lg backdrop-blur-lg bg-white/5 p-8 rounded-2xl">
-               <img src="logo.png" alt=""  className='h-48 mx-auto'/>
+            <h2 className="text-3xl md:text-5xl bg-clip-text font-bold text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-8 text-center">About Us</h2>
+            <div className="space-y-6 text-gray-300 text-base md:text-lg backdrop-blur-lg bg-white/5 p-4 md:p-8 rounded-2xl">
+               <img src="logo.png" alt="" className='h-32 md:h-48 mx-auto'/>
               <p>Attendo is a smart and secure latecomers management system designed to modernize attendance tracking in educational institutions. Our application enables institutions to monitor student punctuality through secure barcode scanning, geofencing-based verification, and real-time data analysis. By identifying latecomers automatically and generating insightful reports, Attendo helps faculty and administrators take timely actions and maintain discipline. With features such as instant notifications, performance dashboards, and reliable analytics, Attendo transforms traditional attendance into a data-driven tool for improving time management and accountability. Our mission is to support schools, colleges, and academic departments in creating a more organized, transparent, and responsible academic environment through the power of technology.</p>
             </div>
           </motion.div>
         </section>
 
-        
         <section ref={contactRef} className="min-h-screen py-32"> 
           <motion.div
             initial={{ opacity: 0 }}
@@ -125,8 +122,8 @@ const Body = () => {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-5xl bg-clip-text  font-bold text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-8 text-center">Contact Us</h2>
-            <form className="space-y-6 backdrop-blur-lg bg-white/5 p-8 rounded-2xl">
+            <h2 className="text-3xl md:text-5xl bg-clip-text font-bold text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mb-8 text-center">Contact Us</h2>
+            <form className="space-y-6 backdrop-blur-lg bg-white/5 p-4 md:p-8 rounded-2xl">
               <div className="space-y-2">
                 <label className="text-white">Email</label>
                 <input 
@@ -150,7 +147,6 @@ const Body = () => {
           </motion.div>
         </section>
 
-        {/* Footer Section */}
         <footer className="py-8 text-center border-t border-gray-800">
           <motion.p
             initial={{ opacity: 0 }}
