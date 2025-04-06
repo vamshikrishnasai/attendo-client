@@ -13,10 +13,8 @@ const signup = () => {
           className="backdrop-blur-lg bg-white/5 p-8 rounded-2xl border border-white/10 max-w-md mx-auto"
         >
           <SignUp 
-            routing="path"
-            path="/signup"
-            signInUrl="/signin"
-            afterSignUpUrl="/"
+            signInUrl="signin"
+            redirectUrl=""
             appearance={{
               elements: {
                 formButtonPrimary: "bg-blue-600 hover:bg-blue-700",
