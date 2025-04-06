@@ -4,13 +4,13 @@ import { motion } from 'framer-motion'
 
 const signup = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 pt-36">
-      <div className="container mx-auto px-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 pt-24 sm:pt-32 md:pt-36 overflow-x-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="backdrop-blur-lg bg-white/5 p-8 rounded-2xl border border-white/10 max-w-md mx-auto"
+          className="backdrop-blur-lg bg-white/5 p-4 sm:p-6 md:p-8 rounded-2xl border border-white/10 max-w-[440px] mx-auto"
         >
           <SignUp 
             signInUrl="signin"
