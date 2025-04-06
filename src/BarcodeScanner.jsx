@@ -10,11 +10,16 @@ const BarcodeScanner = () => {
   const [serverResponse, setServerResponse] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [hasPermission, setHasPermission] = useState(true);
+  const [facingMode, setFacingMode] = useState("environment");
 
   useEffect(() => {
     // Check if device is mobile
     setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
   }, []);
+
+  const toggleCamera = () => {
+    setFacingMode(prevMode => prevMode === "environment" ? "user" : "environment");
+  };
 
   const sendToServer = async (barcode) => {
     const timestamp = new Date().toLocaleString();
@@ -66,43 +71,61 @@ const BarcodeScanner = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 pt-20 sm:pt-36">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 pt-12 sm:pt-20 md:pt-36">
+      <div className="w-full max-w-lg mx-auto px-3 sm:px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="backdrop-blur-lg bg-white/5 p-4 sm:p-8 rounded-2xl border border-white/10"
+          className="backdrop-blur-lg bg-white/5 p-3 sm:p-6 md:p-8 rounded-2xl border border-white/10"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 sm:mb-8 text-center font-poppins tracking-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 md:mb-8 text-center font-poppins tracking-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             Scan Barcode
           </h2>
 
-          <div className="space-y-6 sm:space-y-8">
-            <div className="flex justify-center">
-              <div className="backdrop-blur-lg bg-black/20 p-2 sm:p-4 rounded-xl border border-white/10 w-full max-w-[500px]">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col items-center">
+              <div className="backdrop-blur-lg bg-black/20 p-2 rounded-xl border border-white/10 w-full aspect-[4/3] relative">
                 {hasPermission ? (
-                  <BarcodeScannerComponent
-                    width="100%"
-                    height={isMobile ? 400 : 300}
-                    onUpdate={(err, result) => {
-                      if (result) {
-                        console.log("Scanned from Camera:", result.text);
-                        setScannedData(result.text);
-                        sendToServer(result.text);
-                      }
-                    }}
-                    onError={(err) => {
-                      if (err.name === 'NotAllowedError') {
-                        setHasPermission(false);
-                      }
-                    }}
-                    videoConstraints={{
-                      facingMode: isMobile ? "environment" : "user",
-                      width: { min: 320, ideal: 1280, max: 1920 },
-                      height: { min: 240, ideal: 720, max: 1080 },
-                    }}
-                  />
+                  <>
+                    <BarcodeScannerComponent
+                      width="100%"
+                      height="100%"
+                      onUpdate={(err, result) => {
+                        if (result) {
+                          setScannedData(result.text);
+                          sendToServer(result.text);
+                        }
+                      }}
+                      onError={(err) => {
+                        console.error("Scanner Error:", err);
+                        if (err.name === 'NotAllowedError') {
+                          setHasPermission(false);
+                        }
+                      }}
+                      videoConstraints={{
+                        facingMode: facingMode,
+                        width: { ideal: window.innerWidth < 768 ? 640 : 1280 },
+                        height: { ideal: window.innerWidth < 768 ? 480 : 720 },
+                      }}
+                      style={{ 
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: '0.5rem'
+                      }}
+                    />
+                    {isMobile && (
+                      <button
+                        onClick={toggleCamera}
+                        className="absolute bottom-3 right-3 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        </svg>
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <div className="text-center p-4 text-red-400">
                     Camera permission denied. Please enable camera access and refresh the page.
@@ -111,15 +134,15 @@ const BarcodeScanner = () => {
               </div>
             </div>
 
-            <div className="space-y-4 text-gray-300">
-              <p className="text-lg"><strong>Scanned Data:</strong> {scannedData || "No barcode detected"}</p>
-              <p className="text-lg"><strong>Time Captured:</strong> {timestamp}</p>
+            <div className="space-y-3 text-gray-300 text-sm sm:text-base">
+              <p><strong>Scanned Data:</strong> {scannedData || "No barcode detected"}</p>
+              <p><strong>Time Captured:</strong> {timestamp}</p>
             </div>
 
-            <div className="border-t border-white/10 my-8"></div>
+            <div className="border-t border-white/10 my-4 sm:my-6"></div>
 
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold text-white text-center">Or Upload an Image</h3>
+            <div className="space-y-3 sm:space-y-4">
+              <h3 className="text-xl sm:text-2xl font-semibold text-white text-center">Or Upload an Image</h3>
               <div className="flex justify-center">
                 <input 
                   type="file" 
