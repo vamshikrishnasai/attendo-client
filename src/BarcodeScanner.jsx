@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import jsQR from "jsqr"; 
+import { motion } from "framer-motion";
 
 const BarcodeScanner = () => {
-  const [scannedData, setScannedData] = useState(""); 
-  const [timestamp, setTimestamp] = useState(""); 
-  const [imageData, setImageData] = useState(""); 
-  const [serverResponse, setServerResponse] = useState(""); 
-
+  const [scannedData, setScannedData] = useState("");
+  const [timestamp, setTimestamp] = useState("");
+  const [imageData, setImageData] = useState("");
+  const [serverResponse, setServerResponse] = useState("");
 
   const sendToServer = async (barcode) => {
-    const timestamp = new Date().toLocaleString(); 
-    setTimestamp(timestamp); 
+    const timestamp = new Date().toLocaleString();
+    setTimestamp(timestamp);
 
     try {
       const response = await fetch("http://localhost:8080/api/users/sendData", {
@@ -21,14 +21,13 @@ const BarcodeScanner = () => {
       });
 
       const data = await response.json();
-      setServerResponse(data.message); 
+      setServerResponse(data.message);
       console.log("Server Response:", data.message);
     } catch (error) {
       console.error("Error sending data:", error);
     }
   };
 
-  
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -49,7 +48,7 @@ const BarcodeScanner = () => {
           if (code) {
             console.log("Scanned from Image:", code.data);
             setImageData(code.data);
-            sendToServer(code.data); 
+            sendToServer(code.data);
           } else {
             setImageData("No barcode found in image.");
           }
@@ -60,41 +59,71 @@ const BarcodeScanner = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      
-      <h2>Scan Barcode</h2>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 pt-36">
+      <div className="max-w-3xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="backdrop-blur-lg bg-white/5 p-8 rounded-2xl border border-white/10"
+        >
+          <h2 className="text-4xl font-bold text-white mb-8 text-center font-poppins tracking-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Scan Barcode
+          </h2>
 
-      <center>
-      <BarcodeScannerComponent
-        width={300}
-        height={200}
-        onUpdate={(err, result) => {
-          if (result) {
-            console.log("Scanned from Camera:", result.text);
-            setScannedData(result.text);
-            sendToServer(result.text); 
-          }
-        }}
-        videoConstraints={{ facingMode: "user" }} // Use front camera
-  
-      />
+          <div className="space-y-8">
+            <div className="flex justify-center">
+              <div className="backdrop-blur-lg bg-black/20 p-4 rounded-xl border border-white/10">
+                <BarcodeScannerComponent
+                  width={400}
+                  height={300}
+                  onUpdate={(err, result) => {
+                    if (result) {
+                      console.log("Scanned from Camera:", result.text);
+                      setScannedData(result.text);
+                      sendToServer(result.text);
+                    }
+                  }}
+                  videoConstraints={{ facingMode: "user" }}
+                />
+              </div>
+            </div>
 
-      
-      <p><strong>Scanned Data:</strong> {scannedData || "No barcode detected"}</p>
-      <p><strong>Time Captured:</strong> {timestamp}</p>
-       {/* <p><strong>Late comer:</strong> {}</p> */}
-      <hr />
+            <div className="space-y-4 text-gray-300">
+              <p className="text-lg"><strong>Scanned Data:</strong> {scannedData || "No barcode detected"}</p>
+              <p className="text-lg"><strong>Time Captured:</strong> {timestamp}</p>
+            </div>
 
-      
-      <h3>Or Upload an Image</h3>
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
-      
-      
-      {imageData && <p><strong>Scanned from Image:</strong> {imageData}</p>}
+            <div className="border-t border-white/10 my-8"></div>
 
-      
-      {serverResponse && <p style={{ color: "green" }}><strong>Server:</strong> {serverResponse}</p>}
-      </center>
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-white text-center">Or Upload an Image</h3>
+              <div className="flex justify-center">
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleImageUpload}
+                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600 text-gray-300"
+                />
+              </div>
+              
+              {imageData && (
+                <p className="text-lg text-gray-300">
+                  <strong>Scanned from Image:</strong> {imageData}
+                </p>
+              )}
+            </div>
+
+            {serverResponse && (
+              <div className="mt-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <p className="text-green-400 text-center">
+                  <strong>Server Response:</strong> {serverResponse}
+                </p>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };

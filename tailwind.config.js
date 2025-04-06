@@ -2,17 +2,12 @@
 module.exports = {
     darkMode: ["class"],
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
-    theme: {
-    	extend: {
-           
-            fontWeight: ['hover', 'focus'],
-            fontFamily: {
-                'sans': ['ui-sans-serif', 'system-ui'],
-                'serif': ['ui-serif', 'Georgia'],
-                'mono': ['ui-monospace', 'SFMono-Regular'],
-                'display': ['Oswald'],
-                'body': ['"Open Sans"'],
-               },
+	theme: {
+		extend: {
+		  fontFamily: {
+			poppins: ['Poppins', 'sans-serif'],
+			inter: ['Inter', 'sans-serif'],
+		  },
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
