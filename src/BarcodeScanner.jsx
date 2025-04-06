@@ -26,9 +26,11 @@ const BarcodeScanner = () => {
     setTimestamp(timestamp);
 
     try {
-      const response = await fetch("http://localhost:8080/api/users/sendData", {
+      const API_URL = process.env.REACT_APP_API_URL || "https://your-deployed-server-url.com";
+      const response = await fetch(`${API_URL}/api/users/sendData`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({ barcode, timestamp }),
       });
 
