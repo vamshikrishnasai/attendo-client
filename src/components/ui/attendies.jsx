@@ -15,8 +15,34 @@ const Attendies = () => {
         const result = await response.json();
         console.log("Fetched Data:", result);
 
-        if (response.ok && Array.isArray(result)) {
-          setData(result);
+        if (response.ok && Array.isArray(result.data)) {
+          // Remove duplicate entries for same rollno on same day
+          const uniqueEntries = result.data.reduce((acc, current) => {
+            const currentDate = new Date(current.time).toDateString();
+            const key = `${current.rollno}-${currentDate}`;
+            
+            if (!acc[key]) {
+              acc[key] = current;
+            }
+            return acc;
+          }, {});
+
+          const filteredData = Object.values(uniqueEntries);
+          setData(filteredData);
+
+          // Store latecomers data for analytics
+          const latecomers = filteredData
+            .filter(entry => {
+              const entryTime = new Date(entry.time);
+              const hours = entryTime.getHours();
+              const minutes = entryTime.getMinutes();
+              return hours > 9 || (hours === 9 && minutes > 40);
+            })
+            .map(entry => ({
+              ...entry,
+              time: new Date(entry.time).toISOString()
+            }));
+          localStorage.setItem('latecomersData', JSON.stringify(latecomers));
         } else {
           console.warn("API returned an empty array or invalid format.");
           setData([]);
@@ -105,6 +131,7 @@ const Attendies = () => {
         styles: {
           fontSize: 10,
           cellPadding: 3,
+         
         },
       });
 
@@ -148,7 +175,7 @@ const Attendies = () => {
                 <>
                   <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 008-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                   </svg>
                   Generating...
                 </>

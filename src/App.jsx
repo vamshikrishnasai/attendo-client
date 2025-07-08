@@ -7,7 +7,8 @@ import Signin from './components/ui/signin'
 import Attendies from "./components/ui/attendies"
 import Body from "./components/ui/body"
 import Nav from "./components/ui/nav"
-
+import LearnMore from './components/learnmore'
+import Analytics from './components/ui/analytics'
 
 const App = () => {
   return (
@@ -20,6 +21,8 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/scan" element={<BarcodeScanner />} />
         <Route path="/attendies" element={<Attendies />} />
+        <Route path="/learn-more" element={<LearnMore/>} />
+         <Route path="/analytics" element={<Analytics/>} />
       </Routes>
       </BrowserRouter>
       
