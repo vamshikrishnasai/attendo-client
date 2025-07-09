@@ -49,6 +49,59 @@ const TeamMemberCard = ({ name, role, department, photo, linkedin, github }) => 
   </motion.div>
 );
 
+const techStack = [
+  {
+    name: "React",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+  },
+  {
+    name: "Node.js",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg"
+  },
+  {
+    name: "Express",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png"
+  },
+  {
+    name: "MongoDB",
+    logo: "https://www.svgrepo.com/show/331488/mongodb.svg"
+  },
+  {
+    name: "Python",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+  },
+  {
+    name: "Tailwind CSS",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg"
+  },
+  {
+    name: "shadcn/ui",
+    logo: "https://raw.githubusercontent.com/shadcn/ui/main/apps/www/public/favicon.ico"
+  },
+  {
+    name: "Vercel",
+    logo: "https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png"
+  }
+];
+
+const futureEnhancements = [
+  {
+    name: "Agentic AI",
+    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7oW68XJ4ALiEinBb8O-Lwqco4npKrqxxU_w&s", // Example AI logo
+    description: "Integrate agentic AI for smart attendance insights, anomaly detection, and predictive analytics."
+  },
+  {
+    name: "Biometric",
+    logo: "https://flyinglocksmiths.com/wp-content/smush-webp/Biometric-Access-Control-Thumprint-Reader-862x565.jpg.webp", // Example biometric icon
+    description: "Enable biometric authentication using advanced machine learning for secure, seamless attendance."
+  },
+  {
+    name: "Facial Recognition",
+    logo: "https://miro.medium.com/v2/resize:fit:2000/1*DPNoWJ3Au35Fw58Sn2oj1w.png", // Example facial recognition icon
+    description: "Integrate facial recognition for automated and contactless attendance marking."
+  }
+];
+
 const LearnMore = () => {
     const navigate = useNavigate();
 
@@ -209,6 +262,63 @@ const LearnMore = () => {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Tech Stack Section */}
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="mt-20 mb-12"
+                >
+                  <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                    Tech Stack
+                  </h2>
+                  <div className="flex flex-wrap justify-center gap-8">
+                    {techStack.map((tech) => (
+                      <div
+                        key={tech.name}
+                        className="flex flex-col items-center bg-gradient-to-br from-[#181825] via-[#1e293b] to-[#0A0A0F] rounded-xl p-4 shadow-lg border border-blue-400/10 min-w-[120px] max-w-[140px] transition-transform hover:scale-105"
+                      >
+                        <img
+                          src={tech.logo}
+                          alt={tech.name}
+                          className="h-14 w-14 object-contain mb-3"
+                          loading="lazy"
+                        />
+                        <span className="text-base font-semibold text-blue-200 text-center">{tech.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Future Enhancements Section */}
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="mt-20 mb-12"
+                >
+                  <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Future Enhancements
+                  </h2>
+                  <div className="flex flex-wrap justify-center gap-8">
+                    {futureEnhancements.map((item) => (
+                      <div
+                        key={item.name}
+                        className="flex flex-col items-center bg-gradient-to-br from-[#181825] via-[#1e293b] to-[#0A0A0F] rounded-xl p-4 shadow-lg border border-cyan-400/10 min-w-[180px] max-w-[220px] transition-transform hover:scale-105"
+                      >
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          className="h-14 w-14 object-contain mb-3"
+                          loading="lazy"
+                        />
+                        <span className="text-base font-semibold text-cyan-200 text-center mb-2">{item.name}</span>
+                        <span className="text-xs text-gray-300 text-center">{item.description}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
 
                 <motion.div
                     initial={{ opacity: 0 }}
