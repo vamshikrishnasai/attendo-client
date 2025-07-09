@@ -154,7 +154,7 @@ const LearnMore = () => {
             github: "https://github.com/gikki511"
         },
         {
-            name: "Keerthana",
+            name: "Kolanu Keerthana",
             role: "Design & Marketing",
             department: "Information Technology",
             photo: "/keerthana_img1.png",
