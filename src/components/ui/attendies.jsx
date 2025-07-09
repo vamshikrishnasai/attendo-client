@@ -11,7 +11,7 @@ const Attendies = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/users/getData");
+        const response = await fetch(`${import.meta.env.Server_URL }/api/users/getData`);
         const result = await response.json();
         console.log("Fetched Data:", result);
 
