@@ -12,7 +12,7 @@ const Attendies = () => {
     const fetchData = async () => {
 
       try {
-        const response = await fetch("attendo-server.vercel.app/api/users/getData");
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/getData`);
         const result = await response.json();
         console.log("Fetched Data:", result);
 

@@ -26,7 +26,7 @@ const BarcodeScanner = () => {
     setTimestamp(timestamp);
 
     try {
-      const response = await fetch(`attendo-server.vercel.app/api/users/sendData`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/sendData`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: 'include',
