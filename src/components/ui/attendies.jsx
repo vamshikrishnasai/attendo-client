@@ -10,8 +10,9 @@ const Attendies = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+
       try {
-        const response = await fetch(`${import.meta.env.Server_URL }/api/users/getData`);
+        const response = await fetch("attendo-server.vercel.app/api/users/getData");
         const result = await response.json();
         console.log("Fetched Data:", result);
 
@@ -30,13 +31,13 @@ const Attendies = () => {
           const filteredData = Object.values(uniqueEntries);
           setData(filteredData);
 
-          // Store latecomers data for analytics
+          
           const latecomers = filteredData
             .filter(entry => {
               const entryTime = new Date(entry.time);
               const hours = entryTime.getHours();
               const minutes = entryTime.getMinutes();
-              return hours > 9 || (hours === 9 && minutes > 40);
+              return hours > 12 || (hours === 12 && minutes > 40);
             })
             .map(entry => ({
               ...entry,
